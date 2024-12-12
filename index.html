@@ -31,46 +31,42 @@
     </div>
 </div>
 <script>
-    Telegram.WebApp.ready();
+   Telegram.WebApp.ready();
 
-    // Получаем данные контекста
-    const initData = Telegram.WebApp.initDataUnsafe;
+// Функция для извлечения параметров из URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 
-    // Извлекаем параметр startapp
-    const startAppParam = initData.startParam; // "r_1359_45904282"
+// Извлекаем tgWebAppStartParam
+const startAppParam = getQueryParam('tgWebAppStartParam');
 
-    if (startAppParam) {
-        console.log('Параметр startapp:', startAppParam);
+if (startAppParam) {
+    console.log('tgWebAppStartParam:', startAppParam);
 
-        // Разбираем параметр startapp
-        const [prefix, referralId, referrerId] = startAppParam.split('_');
-        if (prefix === 'r') {
-            console.log('ID реферальной программы:', referralId);
-            console.log('ID пригласившего пользователя:', referrerId);
-
-            // Отправляем данные на сервер для сохранения
-            fetch('https://your-server.com/register-referral', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: initData.user.id, // ID текущего пользователя
-                    referrerId: referrerId,   // ID реферера
-                    referralProgramId: referralId // ID реферальной программы
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Реферальная информация сохранена:', data);
-            })
-            .catch(error => {
-                console.error('Ошибка сохранения реферальной информации:', error);
-            });
-        }
-    } else {
-        console.log('Параметр startapp отсутствует');
-    }
+    // Логика обработки параметра
+    fetch('https://your-server.com/register-referral', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: Telegram.WebApp.initDataUnsafe.user?.id, // ID текущего пользователя
+            referrerId: startAppParam, // Значение tgWebAppStartParam
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Реферальная информация сохранена:', data);
+    })
+    .catch(error => {
+        console.error('Ошибка сохранения реферальной информации:', error);
+    });
+} else {
+    console.log('tgWebAppStartParam отсутствует');
+    // Ваши действия по умолчанию
+}
 </script>
 </body>
 </html>
