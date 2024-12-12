@@ -31,9 +31,9 @@
     </div>
 </div>
 <script>
-   Telegram.WebApp.ready();
+  Telegram.WebApp.ready();
 
-// Функция для извлечения параметров из URL
+// Функция для получения параметров из URL
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -43,9 +43,9 @@ function getQueryParam(param) {
 const startAppParam = getQueryParam('tgWebAppStartParam');
 
 if (startAppParam) {
-    console.log('tgWebAppStartParam:', startAppParam);
+    console.log('tgWebAppStartParam найден:', startAppParam);
 
-    // Логика обработки параметра
+    // Отправляем данные на сервер
     fetch('https://your-server.com/register-referral', {
         method: 'POST',
         headers: {
@@ -65,7 +65,6 @@ if (startAppParam) {
     });
 } else {
     console.log('tgWebAppStartParam отсутствует');
-    // Ваши действия по умолчанию
 }
 </script>
 </body>
