@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>CYPAY (CYP) MiniApp</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div class="header" style="display: flex;justify-content: center;align-items: center;">
+    <h1>CYPAY LOGIN</h1>
+</div>
+<div class="game">
+    <header class="game__header">
+        <p style="display: flex;justify-content: center;align-items: center;">
+        <h2 class="game__score">CYPAY LOGIN</h2>
+        </p>
+    </header>
+    <div class="game__clicker-circle">
+        <img class="game__main-image" src="assets/img/CYP.png" alt="main-image">
+    </div>
+    <div class="game__footer">
+        <div class="settings">
+            <div id="connect-wallet"></div>
+        </div>
+        <div class="energy">
+            <p>Connect wallet login</p>
+        </div>
+    </div>
+</div>
+<script>
+    Telegram.WebApp.ready();
+
+    // Получаем данные контекста
+    const initData = Telegram.WebApp.initDataUnsafe;
+
+    // Извлекаем параметр startapp
+    const startAppParam = initData.startParam; // "r_1359_45904282"
+
+    if (startAppParam) {
+        console.log('Параметр startapp:', startAppParam);
+
+        // Разбираем параметр startapp
+        const [prefix, referralId, referrerId] = startAppParam.split('_');
+        if (prefix === 'r') {
+            console.log('ID реферальной программы:', referralId);
+            console.log('ID пригласившего пользователя:', referrerId);
+
+            // Отправляем данные на сервер для сохранения
+            fetch('https://your-server.com/register-referral', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: initData.user.id, // ID текущего пользователя
+                    referrerId: referrerId,   // ID реферера
+                    referralProgramId: referralId // ID реферальной программы
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Реферальная информация сохранена:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка сохранения реферальной информации:', error);
+            });
+        }
+    } else {
+        console.log('Параметр startapp отсутствует');
+    }
+</script>
+</body>
+</html>
