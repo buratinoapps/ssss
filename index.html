@@ -33,36 +33,27 @@
 <script>
 Telegram.WebApp.ready();
 
-// Функция для извлечения значения параметра tgWebAppStartParam
-function extractStartAppParam(fullParam) {
-    try {
-        // Создаем объект URL из переданной строки
-        const url = new URL(fullParam);
-        // Извлекаем параметр tgWebAppStartParam
-        return url.searchParams.get('tgWebAppStartParam');
-    } catch (error) {
-        console.error('Ошибка обработки startAppParam:', error);
-        return null; // Если формат некорректен
-    }
+// Функция для получения значения параметра
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
 
-// Пример значения startAppParam, переданного Telegram
-const startAppParam = 'https://buratinoapps.github.io/ssss/?tgWebAppStartParam=7267131870';
+// Извлекаем значение параметра tgWebAppStartParam
+const startAppParam = getQueryParam('tgWebAppStartParam');
 
-// Извлекаем значение tgWebAppStartParam из ссылки
-const extractedParam = extractStartAppParam(startAppParam);
+if (startAppParam) {
+    console.log('Значение tgWebAppStartParam:', startAppParam);
 
-if (extractedParam) {
-    console.log('Извлеченное значение tgWebAppStartParam:', extractedParam);
-
-    // Используем извлеченное значение (например, отправляем на сервер)
-    fetch('https://your-server.com/register-referral', {
+    // Используем значение startAppParam
+    // Например, отправляем его на сервер
+    fetch('https://github.com/buratinoapps/ssss/index.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            referrerId: extractedParam, // Значение 7267131870
+            referrerId: startAppParam, // Значение 7267131870
         }),
     })
     .then(response => response.json())
@@ -73,7 +64,7 @@ if (extractedParam) {
         console.error('Ошибка сохранения реферальной информации:', error);
     });
 } else {
-    console.log('Не удалось извлечь значение tgWebAppStartParam');
+    console.log('Параметр tgWebAppStartParam отсутствует');
 }
 
 </script>
