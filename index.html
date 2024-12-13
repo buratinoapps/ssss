@@ -31,42 +31,54 @@
     </div>
 </div>
 <script>
-Telegram.WebApp.ready();
+    Telegram.WebApp.ready();
 
-// Функция для получения значения параметра
-function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
+    // Функция для получения значения параметра
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
-// Извлекаем значение параметра tgWebAppStartParam
-const startAppParam = getQueryParam('tgWebAppStartParam');
+    // Извлекаем значение параметра tgWebAppStartParam
+    const startAppParam = getQueryParam('tgWebAppStartParam');
 
-if (startAppParam) {
-    console.log('Значение tgWebAppStartParam:', startAppParam);
+    if (startAppParam) {
+        console.log('Значение tgWebAppStartParam:', startAppParam);
 
-    // Используем значение startAppParam
-    // Например, отправляем его на сервер
-    fetch('https://github.com/buratinoapps/ssss/index.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            referrerId: startAppParam, // Значение 7267131870
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Реферальная информация сохранена:', data);
-    })
-    .catch(error => {
-        console.error('Ошибка сохранения реферальной информации:', error);
-    });
-} else {
-    console.log('Параметр tgWebAppStartParam отсутствует');
-}
+        // Используем значение startAppParam
+        // Отправляем его на сервер
+        fetch('https://buratinoapps.github.io/ssss/index.php', { // Замените на URL вашего PHP-скрипта
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                referrerId: startAppParam // Значение 7267131870
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Реферальная информация успешно сохранена:', data);
 
+            // Дополнительные действия после сохранения
+            if (data.success) {
+                console.log(`ID реферала: ${data.referrerId}`);
+            } else {
+                console.warn('Ошибка на сервере:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при отправке данных на сервер:', error);
+        });
+    } else {
+        console.log('Параметр tgWebAppStartParam отсутствует');
+    }
 </script>
+
 </body>
 </html>
